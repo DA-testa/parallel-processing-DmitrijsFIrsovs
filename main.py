@@ -1,45 +1,37 @@
 # python3
-import os
+import heapq
 
 def parallel_processing(n, m, data):
+    output = []
     
-    p = [(0,1) for i in range(n)]
-    result = []
+    t = [(0 , i) for i in range(n)]
+    heapq.heapify(t)
     
     for i in range(m):
-        t = data[i]
-        ft, d = p[0]
-        result.append((d, ft))
-        p[0] = (ft + t,d)
+        a , b = heapq.heappop(t)
+        output.append((b , a))
+        heapq.heappush(a, (a + data[i], b))
         
-        j=0
-        while True:
-            ch1 = 2*j +1
-            ch2 = 2*j +2
-            if ch1 >= n:
-                break
-            if ch2 >= n or p[ch1] <= p[ch2]:
-                ch = ch1
-            else:
-                ch = ch2
-            if p[ch] < p[j]:
-                p[ch], p[j] = p[j], p[ch]
-                j = ch
-            else:
-                break
-                
-    with open(os.environ['OUTPUT_PATH'], 'w') as f:
-        for thread_id, start_time in result:
-            f.write(f"{thread_id} {start_time}\n")
+    return output    
+    
+   
    
 def main():
     n , m = map(int, input().split())
     data = list(map(int, input().split()))
     
-    os.environ['OUTPUT_PATH'] = 'output.txt'
+    assert 1 <= n <=10 **5
+    assert 1 <= m <=10 **5
+    assert len(data) == m
+    assert all (0 <= ti<= 10 ** 9 for ti in data)
     
     
-    parallel_processing(n, m, data)
+    
+    
+    result = parallel_processing(n, m, data)
+    
+    for b , ab in result:
+        print(a , ab)
     
  
 
