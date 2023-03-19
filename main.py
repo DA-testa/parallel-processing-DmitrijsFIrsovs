@@ -10,7 +10,7 @@ def parallel_processing(n, m, data):
     for i in range(m):
         a , b = heapq.heappop(t)
         output.append((b , a))
-        heapq.heappush(a, (a + data[i], b))
+        heapq.heappush(t, (a + data[i], b))
         
     return output    
     
