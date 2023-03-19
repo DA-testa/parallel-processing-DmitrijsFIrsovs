@@ -1,14 +1,15 @@
 # python3
+import os
 
 def parallel_processing(n, m, data):
     
     p = [(0,1) for i in range(n)]
-    output = []
+    result = []
     
     for i in range(m):
         t = data[i]
         ft, d = p[0]
-        output.append((d, ft))
+        result.append((d, ft))
         p[0] = (ft + t,d)
         
         j=0
@@ -26,21 +27,21 @@ def parallel_processing(n, m, data):
                 j = ch
             else:
                 break
-    
-
-    return output
-
+                
+    with open(os.environ['OUTPUT_PATH'], 'w') as f:
+        for thread_id, start_time in result:
+            f.write(f"{thread_id} {start_time}\n")
+   
 def main():
     n , m = map(int, input().split())
     data = list(map(int, input().split()))
     
-    output = parallel_processing(n, m , data)
-
-    for d , st in output:
-        print(d, st)
+    os.environ['OUTPUT_PATH'] = 'output.txt'
     
-
-
+    
+    parallel_processing(n, m, data)
+    
+ 
 
 
 if __name__ == "__main__":
