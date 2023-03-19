@@ -30,8 +30,8 @@ def main():
     
     result = parallel_processing(n, m, data)
     
-    for b , ab in result:
-        print(a , ab)
+    for b , c in result:
+        print(a , c)
     
  
 
